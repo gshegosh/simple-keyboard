@@ -123,6 +123,7 @@ class SimpleKeyboard {
      * @property {function} destroy Clears keyboard listeners and DOM elements.
      * @property {boolean} disableButtonHold Disable button hold action.
      * @property {boolean} rtl Adds unicode right-to-left control characters to input return values.
+     * @property {function} onKeyDown Executes the callback function on key release.
      * @property {function} onKeyReleased Executes the callback function on key release.
      * @property {array} modules Module classes to be loaded by simple-keyboard.
      * @property {boolean} enableLayoutCandidates Enable input method editor candidate list support.
@@ -553,6 +554,9 @@ class SimpleKeyboard {
 
     if (this.holdInteractionTimeout) clearTimeout(this.holdInteractionTimeout);
     if (this.holdTimeout) clearTimeout(this.holdTimeout);
+
+    if (button && typeof this.options.onKeyDown === "function")
+      this.options.onKeyDown(button);
 
     /**
      * @type {boolean} Whether the mouse is being held onKeyPress
